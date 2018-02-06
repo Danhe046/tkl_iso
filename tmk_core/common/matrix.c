@@ -65,11 +65,12 @@ void matrix_print(void)
         xprintf("%02X: %032b%s\n", row, bitrev32(matrix_get_row(row)),
 #endif
 #ifdef MATRIX_HAS_GHOST
-        matrix_has_ghost_in_row(row) ?  " <ghost" : ""
+        matrix_has_ghost_in_row(row) ?  " <ghost" : "hhhh"
 #else
-        ""
+        "hej"
 #endif
         );
+//        xprintf("Troll\n");
     }
 }
 

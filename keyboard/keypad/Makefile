@@ -54,7 +54,7 @@ SRC =	matrix.c \
 ifdef KEYMAP
     SRC := keymap_$(KEYMAP).c $(SRC)
 else
-    SRC := keymap_poker.c $(SRC)
+    SRC := keymap_tkl_iso.c $(SRC)
 endif
 
 CONFIG_H = config.h
@@ -77,6 +77,14 @@ MCU = atmega32u4
 #     software delays.
 F_CPU = 16000000
 
+#PROGRAM_CMD = avrdude -p $(MCU) -c arduino -P /dev/ttyACM0 -b 57600 -U flash:w:$(TARGET).hex
+
+#burn:
+#	python reset.py /dev/ttyACM0
+#	sleep 2
+#	#avrdude -p $(MCU) -c arduino -P /dev/ttyACM0 -b 57600 -U flash:w:$(TARGET).hex
+#	#avrdude -C /usr/share/arduino/hardware/tools/avrdude.conf -p $(MCU) -c avr109 -P /dev/ttyACM0 -b 57600 -U flash:w:$(TARGET).hex
+#	avrdude -C /usr/share/arduino/hardware/tools/avrdude.conf -p $(MCU) -c avr109 -P /dev/ttyACM0 -b 57600 -D -U flash:w:$(TARGET).hex:i
 
 #
 # LUFA specific

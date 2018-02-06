@@ -44,6 +44,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "adb.h"
 #endif
 
+#define PRINTF_BINARY_PATTERN_INT8 "%c%c%c%c%c%c%c%c"
+#define PRINTF_BYTE_TO_BINARY_INT8(i)    \
+    (((i) & 0x80ll) ? '1' : '0'), \
+    (((i) & 0x40ll) ? '1' : '0'), \
+    (((i) & 0x20ll) ? '1' : '0'), \
+    (((i) & 0x10ll) ? '1' : '0'), \
+    (((i) & 0x08ll) ? '1' : '0'), \
+    (((i) & 0x04ll) ? '1' : '0'), \
+    (((i) & 0x02ll) ? '1' : '0'), \
+    (((i) & 0x01ll) ? '1' : '0')
+
+#define PRINTF_BINARY_PATTERN_INT16 \
+    PRINTF_BINARY_PATTERN_INT8              PRINTF_BINARY_PATTERN_INT8
+#define PRINTF_BYTE_TO_BINARY_INT16(i) \
+    PRINTF_BYTE_TO_BINARY_INT8((i) >> 8),   PRINTF_BYTE_TO_BINARY_INT8(i)
+#define PRINTF_BINARY_PATTERN_INT32 \
+    PRINTF_BINARY_PATTERN_INT16             PRINTF_BINARY_PATTERN_INT16
+#define PRINTF_BYTE_TO_BINARY_INT32(i) \
+    PRINTF_BYTE_TO_BINARY_INT16((i) >> 16), PRINTF_BYTE_TO_BINARY_INT16(i)
+
 
 #ifdef MATRIX_HAS_GHOST
 static bool has_ghost_in_row(uint8_t row)
@@ -111,6 +131,12 @@ void keyboard_task(void)
         matrix_row = matrix_get_row(r);
         matrix_change = matrix_row ^ matrix_prev[r];
         if (matrix_change) {
+          /*for (uint8_t i = 0; i < MATRIX_ROWS; i++)
+          {
+            xprintf(PRINTF_BINARY_PATTERN_INT32" ", PRINTF_BYTE_TO_BINARY_INT32(matrix[i]));
+          }
+          xprintf("\n");
+*/
 #ifdef MATRIX_HAS_GHOST
             if (has_ghost_in_row(r)) {
                 /* Keep track of whether ghosted status has changed for

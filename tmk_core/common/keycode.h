@@ -348,6 +348,8 @@ enum hid_keyboard_keypad_usage {
     KC_CRSEL,
     KC_EXSEL,           /* 0xA4 */
 
+/*    KC_SECTION = 0xA7,*/
+
     /* NOTE: Following code range(0xB0-DD) are shared with special codes of 8-bit keymap */
     KC_KP_00            = 0xB0,
     KC_KP_000,
